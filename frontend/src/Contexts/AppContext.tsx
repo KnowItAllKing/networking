@@ -1,11 +1,8 @@
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
-import { API_URL } from '..';
+import React, { createContext, useState, ReactNode } from 'react';
 
 export const AppContext = createContext<AppContextType | null>(null);
 
 export const defaultState: AppState = {
-  username: undefined,
-  isLoggedIn: false,
   networks: [
     {
       name: 'John Smith',
@@ -37,30 +34,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
     return storedState ? JSON.parse(storedState) : defaultState;
   });
 
-  useEffect(() => {
-    // const verifyUser = async () => {
-    //   try {
-    //     const response = await fetch(
-    //       `${(API_URL as string) + '/user/verify'}`,
-    //       {
-    //         credentials: 'include'
-    //       }
-    //     );
-    //     const data = await response.json();
-    //     if (data.isAuthenticated) {
-    //       setState({ ...state, username: data.username, isLoggedIn: true });
-    //     } else {
-    //       setState(defaultState);
-    //       localStorage.setItem('state', JSON.stringify(state));
-    //     }
-    //   } catch (error) {
-    //     console.error('Error verifying user:', error);
-    //   }
-    // };
-    // if (state.isLoggedIn) verifyUser();
-    // localStorage.setItem('state', JSON.stringify(state));
-  }, []);
-
   return (
     <AppContext.Provider value={{ state, setState }}>
       {children}
@@ -69,8 +42,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
 };
 
 export interface AppState {
-  username?: string;
-  isLoggedIn: boolean;
   networks: Network[];
 }
 
@@ -80,7 +51,7 @@ export interface Network {
   company: string;
   created_at: number;
   updated_at: number;
-  entries: Entry[];
+  entries?: Entry[];
 }
 
 export interface Entry {

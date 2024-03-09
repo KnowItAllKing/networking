@@ -1,6 +1,6 @@
-use actix_web::{web, HttpRequest, HttpResponse};
+use actix_web::{get, HttpResponse};
 
-pub async fn greet(info: HttpRequest) -> HttpResponse {
-    // Implement login logic here...
-    HttpResponse::Ok().json("Logged in")
+#[get("")]
+pub async fn greet() -> HttpResponse {
+    HttpResponse::Ok().json("Hello World!")
 }

@@ -1,6 +1,9 @@
-use crate::controllers::index_controller;
-use actix_web::web::{self, ServiceConfig};
+use crate::controllers::index_controller::{greet};
+use actix_web::web;
 
-pub fn config(cfg: &mut web::ServiceConfig) {
-    cfg.route("/", web::get().to(index_controller::greet));
+pub fn index_config(cfg: &mut web::ServiceConfig) {
+    cfg.service(
+        web::scope("/")
+            .service(greet)
+    );
 }
